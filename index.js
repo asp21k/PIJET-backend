@@ -36,7 +36,7 @@ app.use("/fetching", require("./routes/fetching"));
 const PORT = process.env.PORT || 5000;
 
 // Schedule a cron job to hit the `/get` route every 1 minute
-const task = cron.schedule('*/1 * * * *', () => {
+const task = cron.schedule('*/5 * * * *', () => {
   console.log('Hitting /get route every 1 minute');
   fetch('https://pijet-backend.onrender.com') 
     .then(response => response.text())
