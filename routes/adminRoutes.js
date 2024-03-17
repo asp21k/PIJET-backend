@@ -9,4 +9,4 @@ router.get("/getallsubmissions", isAdminAuthenticated ,getAllSubmissions);
 router.get("/getpaperbyid", isAdminAuthenticated, getPaperById);
 router.post("/signup",isAdminAuthenticated ,adminSignUp);
 router.get("/login", adminLogin);
-module.exports = routers;
+module.exports = router;
