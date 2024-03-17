@@ -34,5 +34,26 @@ const uploadPaper = async (req, res, next) => {
       res.status(500).json({ error: 'Internal server error' });
     }
   };
+  const addAuthor = async (req, res) => {
+    const { fname, lname, email, country, organization, registration_id, author_position } = req.body;
+    if(!fname || !lname || !email || !country || !organization || !registration_id || !author_position){
+        return res.status(400).json({message: "All fields are required"});
+    }
+    try{
+        const query = `INSERT INTO authors (fname, lname, email, country, organization, fk_registration_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`;
+        const values = [fname, lname, email, country, organization, registration_id];
+        const newAuthor = await pool.query(query, values);
 
-module.exports = { uploadPaper };
+        const author_id = newAuthor.rows[0].author_id;
+        const query2 = `INSERT INTO author_position (author_id, position, fk_registration_id) VALUES ($1, $2) RETURNING *`;
+        const values2 = [author_id, author_position, registration_id];
+        const newAuthorPosition = await pool.query(query2, values2);
+        
+        res.json({newAuthor, newAuthorPosition});
+    }
+    catch(err){
+        res.status(500).json({message: "Internal Server Error"});
+    }
+}
+
+module.exports = { uploadPaper,addAuthor };
