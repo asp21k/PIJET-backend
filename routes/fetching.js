@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {getAllSubmissions, getPaperById} = require('../controllers/adminSubmissionFetching');
-router.get('/papers/download',getPaperById);
-router.get('/papers',getAllSubmissions);    
+const {isAuthenticated}  = require('../middlewares/userAuth');
+const {getPaperDetails} = require('../controllers/userPaperFetching');
+router.get('/papers/',isAuthenticated ,getPaperDetails);  
 module.exports = router;

@@ -50,9 +50,10 @@ const isAuthenticated = async (req, res, next) => {
       return res.status(401).json({ error: true, message: "Invalid Token!" });
     }
 
-    const userId = tokenQueryData.rows[0].fk_user;
+    const userId = tokenQueryData.rows[0].fk_author_id;
 
     req.user = userId;
+    
     req.token = token;
     next();
   } catch (err) {
@@ -63,5 +64,5 @@ const isAuthenticated = async (req, res, next) => {
 
 module.exports = {
   validateUserData,
-  isAuthenticated,
+  isAuthenticated
 };

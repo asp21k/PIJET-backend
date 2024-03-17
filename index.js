@@ -32,7 +32,7 @@ app.get("/", (req, res) => {
 app.use("/submit", require("./routes/submit"));
 app.use("/user", require("./routes/userRoutes"));
 app.use("/admin", require("./routes/adminRoutes"));
-
+app.use("/fetching", require("./routes/fetching"));
 const PORT = process.env.PORT || 5000;
 
 // Schedule a cron job to hit the `/get` route every 1 minute
