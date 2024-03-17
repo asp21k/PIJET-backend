@@ -6,6 +6,6 @@ const { getAllSubmissions, getPaperById } = require("../controllers/adminSubmiss
 
 router.get("/getallsubmissions", getAllSubmissions);
 router.get("/getpaperbyid", getPaperById);
-router.get("/signup", adminSignUp);
+router.post("/signup", adminSignUp);
 router.get("/login", adminLogin);
 module.exports = router;
