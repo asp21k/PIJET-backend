@@ -21,13 +21,10 @@ const isAdminAuthenticated = async (req, res, next) => {
     }
 
     const adminId = tokenQueryData.rows[0].fk_admin_id;
-    const adminQuery = `SELECT USERNAME FROM ADMIN_TOKEN WHERE fk_admin_id = $1`;
-    const adminQueryParams = [adminId];
-    const adminQueryData = await pool.query(adminQuery, adminQueryParams);
-
-    req.admin = adminQuery.rowa[0];
+    
+    req.admin = adminId;
     req.token = token;
-    next;
+    next();
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: true, message: "Internal Server Error!" });
