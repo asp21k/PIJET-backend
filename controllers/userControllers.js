@@ -87,7 +87,7 @@ const login = async (req, res) => {
         });
       }
     } else {
-      res.status(404).json({
+      res.status(401).json({
         error: true,
         message:
           "The provided email does not match any existing user account. Please verify your credentials or consider signing up if you do not have an account.",
