@@ -12,7 +12,7 @@ const isAdminAuthenticated = async (req, res, next) => {
     }
 
     const token = authHeader.replace("Bearer ", "");
-    const tokenQuery = `SELECT * FROM ADMIN_TOKEN WHERE token = $1`;
+    const tokenQuery = `SELECT * FROM ADMIN_TOKEN WHERE admin_token_value = $1`;
     const tokenQueryParams = [token];
     const tokenQueryData = await pool.query(tokenQuery, tokenQueryParams);
 
