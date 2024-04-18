@@ -39,12 +39,10 @@ const uploadPaperDetails = async (req, res) => {
       );
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Paper details submitted successfully.",
-        registrationId: registrationId,
-      });
+    res.status(200).json({
+      message: "Paper details submitted successfully.",
+      registrationId: registrationId,
+    });
   } catch (error) {
     console.error("Error while uploading paper details:", error);
     // Send an error response back to the client
@@ -53,17 +51,25 @@ const uploadPaperDetails = async (req, res) => {
 };
 
 const uploadFilePathToVersionTable = async (req, res) => {
-  if(!req.file){
-    return res.status(400).json({ error: "No file uploaded" });
-  }
-
   const user_id = req.user;
   const { registrationId, title, paperpath } = req.body;
+  if (!req.file) {
+    const query1 = `DELETE FROM paper_register WHERE registration_id = $1`;
+    const query2 = `DELETE FROM author WHERE fk_registration_id = $1`;
+    const query3 = `DELETE FROM author_position WHERE fk_registration_id = $1`;
+    await pool.query(query1, [registrationId]);
+    await pool.query(query2, [registrationId]);
+    await pool.query(query3, [registrationId]);
+
+    return res.status(400).json({ error: "File not uploaded successfully" });
+  }
+
   try {
     const registrationCheck = await pool.query(
-      `select * from paper_register where registration_id = $1 and fk_user_id = $2`,[registrationId, user_id]
+      `select * from paper_register where registration_id = $1 and fk_user_id = $2`,
+      [registrationId, user_id]
     );
-    if(registrationCheck.rowCount < 1){
+    if (registrationCheck.rowCount < 1) {
       return res.status(400).json({ error: "Invalid registration id " });
     }
 
