@@ -42,6 +42,7 @@ const uploadPaperDetails = async (req, res) => {
     res.status(200).json({
       message: "Paper details submitted successfully.",
       registrationId: registrationId,
+      title: title,
     });
   } catch (error) {
     console.error("Error while uploading paper details:", error);
@@ -52,7 +53,9 @@ const uploadPaperDetails = async (req, res) => {
 
 const uploadFilePathToVersionTable = async (req, res) => {
   const user_id = req.user;
-  const { registrationId, title, paperpath } = req.body;
+  const paperpath = req.file.path;
+  const { registrationId, title } = req.body;
+  console.log(paperpath,"paperpath")
   if (!req.file) {
     const query1 = `DELETE FROM paper_register WHERE registration_id = $1`;
     const query2 = `DELETE FROM author WHERE fk_registration_id = $1`;
