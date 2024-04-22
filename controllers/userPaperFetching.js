@@ -13,6 +13,7 @@ const getPaperDetails = async (req, res) => {
       error: false,
       message: "Success",
       data: queryData.rows,
+      
     });
   } catch (err) {
     console.log(err);
