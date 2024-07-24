@@ -4,7 +4,7 @@ const app = express();
 const cron = require('node-cron');
 const fetch = require('node-fetch'); // Import node-fetch for making HTTP requests
 const allowedOrigin1 = 'https://pijet.org';
-const allowedOrigin2 = 'https://localhost:3000';
+const allowedOrigin2 = 'http://localhost:3000';
 
 // Middleware for CORS handling
 app.use(express.json());
