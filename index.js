@@ -3,14 +3,15 @@ const express = require("express");
 const app = express();
 const cron = require('node-cron');
 const fetch = require('node-fetch'); // Import node-fetch for making HTTP requests
-const allowedOrigins = 'https://pijet.org';
+const allowedOrigin1 = 'https://pijet.org';
+const allowedOrigin2 = 'https://localhost:3000';
 
 // Middleware for CORS handling
 app.use(express.json());
 app.use((req, res, next) => {
   const origin = req.headers.origin;
   console.log(origin);
-  if (allowedOrigins===origin) {
+  if (allowedOrigin1===origin || allowedOrigin2===origin) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   } else {
     console.error(`Unallowed origin: ${origin}`); // Log for security tracking
